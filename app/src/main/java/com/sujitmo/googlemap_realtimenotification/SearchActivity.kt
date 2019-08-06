@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +16,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocomplete
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_search.*
 import java.io.IOException
@@ -39,12 +34,12 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        textView2.setOnClickListener {
+        destinationTxt.setOnClickListener {
             getAddress()
         }
 
         button.setOnClickListener {
-            if (textView2.text.isNotEmpty() && textView.text.isNotEmpty()) {
+            if (destinationTxt.text.isNotEmpty() && sourceTxt.text.isNotEmpty()) {
                 val budle=Bundle()
                  budle.putDouble("sLat",slat!!)
                 budle.putDouble("sLog",slog!!)
@@ -104,7 +99,7 @@ class SearchActivity : AppCompatActivity() {
             sb.append(address.locality).append("\n")
             sb.append(address.postalCode).append("\n")
             sb.append(address.countryName)
-            textView.text = address.subLocality
+            sourceTxt.text = address.subLocality
 
             Toast.makeText(this@SearchActivity,address.toString(), Toast.LENGTH_LONG).show()
 
@@ -186,7 +181,7 @@ class SearchActivity : AppCompatActivity() {
                     dlog = addresses[0].longitude
 
                     if (addresses.get(0).subLocality != null) {
-                        textView2.text = addresses.get(0).subLocality
+                        destinationTxt.text = addresses.get(0).subLocality
                     }
 
 
